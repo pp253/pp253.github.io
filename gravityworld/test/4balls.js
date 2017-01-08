@@ -25,7 +25,7 @@ function run () {
     offset: 200,
     distance: 800,
     initialSpeed: 18.9,
-    number: 6,
+    number: 4,
     mass: 100,
     color: 'green'
   }
@@ -39,7 +39,8 @@ function run () {
       y: 0
     },
     mass: 30000,
-    color: 'red'
+    color: 'red',
+    fixed: true
   })
   myWorld.addBall(ballSun)
 
