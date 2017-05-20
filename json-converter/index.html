@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>From JSON to CSV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <a class="navbar-brand" href="#">From JSON to CSV</a>
+  </nav>
+	
+	<div class="container" style="margin-top: 15px;">
+		<form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">輸入要轉換的JSON文字</label>
+				<textarea class="form-control" id="input" placeholder='你要輸入的東西會像 [{"property": value}]' rows=8></textarea>
+			</div>
+      <div style="text-align: right;">
+        <button type="button" class="btn btn-primary" id="convert">轉換</button>
+      </div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">被轉換過的CSV會出現在下面</label>
+				<textarea class="form-control" id="output" rows=8></textarea>
+        <small>注意，第一行是標題列</small>
+			</div>
+		</form>
+	</div>
+	
+	<div class="container" style="margin-top: 15px;">
+    <div style="text-align: center;">
+      <p>by <a href="https://github.com/pp253">pp253</a></p>
+    </div>
+	</div>
+	
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script>
+	$('#convert').click(function () {
+		let data = JSON.parse($('#input').val())
+		
+		if (data.length < 1) {
+			throw Error('This data set is empty or broken.')
+		}
+
+		let result = ''
+		let str = []
+
+		for (let propertyName in data[0]) {
+			str.push(propertyName)
+		}
+
+		result += str.join(',') + '\n'
+
+		for (let item of data) {
+			str = []
+			for (let elem in item) {
+				str.push(item[elem])
+			}
+			result += str.join(',') + '\n'
+		}
+
+		$('#output').val(result)
+	})
+	</script>
+</body>
